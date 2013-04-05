@@ -29,13 +29,13 @@
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Łukasz Niemier <lukasz@niemier.pl>
 #
 # === Copyright
 #
-# Copyright 2013 Your name here, unless otherwise noted.
+# Copyright 2013 Łukasz Niemier, unless otherwise noted.
 #
-class gitdeploy ($gituser = 'git', $gitgroup = $gituser) {
+class gitdeploy ($gituser = 'git', $gitgroup = 'git') {
   package { 'git':
     ensure => present
   }
@@ -45,9 +45,9 @@ class gitdeploy ($gituser = 'git', $gitgroup = $gituser) {
   }
 
   user { $gituser:
-    require    => Group['$gitgroup'],
+    require    => [Group[$gitgroup], Package['git']],
     ensure     => present,
-    group      => $gituser,
+    gid        => $gitgroup,
     home       => '/var/repositories',
     managehome => true,
     shell      => '/usr/bin/git-shell'
