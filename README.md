@@ -31,6 +31,15 @@ After that you should be able to push your application to server:
 After that all files should be checkouted to `path`, all gems installed (so far this accept only
 Ruby apps that use Bundler) and server should start using Foreman.
 
+## TODO
+
+- Add Redis to store each app configuration
+- Write simple CLI managament tool
+- Privileges for write to repository per user, now everyone is allowed to write to all (of course if
+  is in `authorized_keys`)
+- Add more detectable projects, now only Ruby apps that use Bundler are allowed
+- Allow to configure Foreman instances
+
 ## License
 
 See `LICENCE` file.
