@@ -1,4 +1,5 @@
 # GitDeploy
+[![endorse](https://api.coderwall.com/hauleth/endorsecount.png)](https://coderwall.com/hauleth)
 
 This is module for creating git-deployable services in super easy way. Under hard development, but
 I hope that in future it will be more configureable and advanced than Heroku (if you will help me
