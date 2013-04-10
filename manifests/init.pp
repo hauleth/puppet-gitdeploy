@@ -35,7 +35,10 @@
 #
 # Copyright 2013 Łukasz Niemier, unless otherwise noted.
 #
-class gitdeploy ($gituser = 'git', $gitgroup = $gituser, $path = '/var/repositories', $authkeyspath = undef) {
+class gitdeploy ($gituser = 'git',
+          $gitgroup = $gituser,
+          $path = '/var/repositories',
+          $authkeyspath = undef) {
   package { 'git':
     ensure => present
   }
@@ -48,10 +51,10 @@ class gitdeploy ($gituser = 'git', $gitgroup = $gituser, $path = '/var/repositor
   }
 
   file { 'ssh':
+    ensure  => directory,
     require => User[$gituser],
     path    => "${path}/.ssh",
-    ensure  => directory,
-    mode    => 700
+    mode    => '0700'
   }
 
   if $authkeyspath != undef {
@@ -60,7 +63,7 @@ class gitdeploy ($gituser = 'git', $gitgroup = $gituser, $path = '/var/repositor
       path    => "${path}/.ssh/authorized_keys",
       ensure  => present,
       source  => $authkeyspath,
-      mode    => 600
+      mode    => '0600'
     }
   }
 }
