@@ -40,22 +40,16 @@ class gitdeploy ($gituser = 'git', $gitgroup = $gituser, $path = '/var/repositor
     ensure => present
   }
 
-  group { $gitgroup:
-    ensure => present
-  }
-
   user { $gituser:
-    require    => [Group[$gitgroup], Package['git']],
     ensure     => present,
     gid        => $gitgroup,
     home       => $path,
-    managehome => true,
-    shell      => '/usr/bin/git-shell'
+    managehome => true
   }
 
   file { 'ssh':
     require => User[$gituser],
-    path    => "${path}/.ssh"
+    path    => "${path}/.ssh",
     ensure  => directory,
     mode    => 700
   }
