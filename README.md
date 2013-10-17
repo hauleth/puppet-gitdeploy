@@ -44,3 +44,7 @@ Ruby apps that use Bundler) and server should start using Foreman.
 ## License
 
 See `LICENCE` file.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/hauleth/puppet-gitdeploy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
