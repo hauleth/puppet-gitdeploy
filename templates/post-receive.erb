@@ -1,37 +1,38 @@
 #!/bin/sh
+# vi: syn=sh
 
-export GIT_WORK_TREE=<%= @path %> # Working path
-export GIT_DIR=<%= @repo %>       # Path to repository
+export GIT_WORK_TREE="<%= @path %>" # Working path
+export GIT_DIR="<%= @repo %>"       # Path to repository
 
-cd $GIT_WORK_TREE
+cd "$GIT_WORK_TREE"
+
+# Check if watched branch is updated
+present=
+while read oldrev newrev refname
+do
+  branch=$(command git rev-parse --symbolic --abbrev-ref $refname)
+  if [ "$branch" = "<%= @branch %>" ]
+  then
+    present=1
+  fi
+done
+[ -z "$present" ] && exit 0
 
 echo '--------------------> Check out <--------------------'
-git checkout -f || exit 1
+git checkout -f "<%= @branch %>" || exit 1
 
 echo
-echo '------------------> Detect project <-----------------'
-if [ -e $GIT_WORK_TREE/Gemfile.lock ]; then
-  echo 'Detected Ruby app'
-
-  bundle install --deployment --without=development --path=vendor/bundle || exit 1
-
-  rake assets:precompile
-else
-  # TODO: Add more detectable applications
-  echo 'Unknown app'
-  exit 1
-fi
+echo '--------------------> Setup app <--------------------'
 
 # Left it for future
-#if [ -e .slugignore ]; then
-#  echo
-#  echo '--------------------> Cleanup <---------------------'
-
-#  rm -rf $(cat .slugignore)
-#fi
+# if [ -e .slugignore ]; then
+#   echo
+#   echo '--------------------> Cleanup <---------------------'
+#
+#   rm -rf $(cat .slugignore)
+# fi
 
 echo
 echo '--------------------> Run app <---------------------'
 
-# TODO: Create it more configureable
 foreman start

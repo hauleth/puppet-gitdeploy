@@ -59,9 +59,9 @@ class gitdeploy ($gituser = 'git',
 
   if $authkeyspath != undef {
     file { 'authorized_users':
+      ensure  => present,
       require => File['ssh'],
       path    => "${path}/.ssh/authorized_keys",
-      ensure  => present,
       source  => $authkeyspath,
       mode    => '0600'
     }

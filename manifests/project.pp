@@ -1,4 +1,8 @@
-define gitdeploy::project ($name = $title, $path, $reponame = $name, $repopath = '/var/repositories') {
+define gitdeploy::project ($name = $title,
+                           $path,
+                           $reponame = $name,
+                           $repopath = '/var/repositories',
+                           $branch = 'master') {
   $repo = "${repopath}/${name}.git"
 
   file { $path:
@@ -6,7 +10,7 @@ define gitdeploy::project ($name = $title, $path, $reponame = $name, $repopath =
     recurse => true
   }
 
-  exec { 'createrepo':
+  exec { 'create-repo':
     command => "git init --bare ${repo}"
   }
 
